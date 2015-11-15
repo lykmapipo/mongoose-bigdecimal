@@ -153,7 +153,7 @@ SchemaBigDecimal.prototype.cast = function(value /*,doc , init*/ ) {
     }
 
     //is number or string
-    if (value && (typeof value === 'string' || typeof value === 'number')) {
+    if ((typeof value === 'string') || (typeof value === 'number')) {
         try {
             return new BigDecimal(value);
         } catch (e) {
@@ -178,11 +178,12 @@ function handleArray(val) {
     /*jshint validthis:true*/
 
     if (!Array.isArray(val)) {
-        return [this.cast(val)];
+        val = [val];
     }
 
     return val.map(function(m) {
-        return this.cast(m);
+        var cast = this.cast(m);
+        return cast.valueOf();
     }.bind(this));
 
 }

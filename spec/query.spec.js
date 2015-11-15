@@ -17,9 +17,18 @@ var Product;
 var prices = [
     new BigDecimal(1.234),
     new BigDecimal(98.993),
-    new BigDecimal(948),
+    new BigDecimal(949),
     new BigDecimal(8888.7905),
     new BigDecimal(9999.9999)
+];
+
+//prepare fake discounts
+var discounts = [
+    new BigDecimal(1),
+    new BigDecimal(2),
+    new BigDecimal(3),
+    new BigDecimal(4),
+    new BigDecimal(5)
 ];
 
 describe('BigDecimal Schema Type Queries', function() {
@@ -31,7 +40,10 @@ describe('BigDecimal Schema Type Queries', function() {
                 type: Schema.Types.BigDecimal,
                 required: true,
                 index: true
-            }
+            },
+            discounts: [{
+                type: Schema.Types.BigDecimal
+            }]
         });
         Product = mongoose.model('Product_', ProductSchema);
 
@@ -39,27 +51,32 @@ describe('BigDecimal Schema Type Queries', function() {
         .parallel({
             '0': function(next) {
                 new Product({
-                    price: prices[0]
+                    price: prices[0],
+                    discounts: [discounts[0], discounts[1]]
                 }).save(next);
             },
             '1': function(next) {
                 new Product({
-                    price: prices[1]
+                    price: prices[1],
+                    discounts: [discounts[1], discounts[2]]
                 }).save(next);
             },
             '2': function(next) {
                 new Product({
-                    price: prices[2]
+                    price: prices[2],
+                    discounts: [discounts[2], discounts[3]]
                 }).save(next);
             },
             '3': function(next) {
                 new Product({
-                    price: prices[3]
+                    price: prices[3],
+                    discounts: [discounts[3], discounts[4]]
                 }).save(next);
             },
             '4': function(next) {
                 new Product({
-                    price: prices[4]
+                    price: prices[4],
+                    discounts: [discounts[4]]
                 }).save(next);
             }
         }, done);
@@ -315,6 +332,98 @@ describe('BigDecimal Schema Type Queries', function() {
             expect(_prices).to.contain(prices[0].toString());
             expect(_prices).to.contain(prices[1].toString());
             expect(_prices).to.contain(prices[2].toString());
+
+            done(error, products);
+        });
+    });
+
+    it('should be able to use bigdecimal instances in `$in` query', function(done) {
+
+        var query = Product
+            .where('discounts')
+            .in([discounts[0], discounts[1]]);
+
+        query.exec(function(error, products) {
+
+            var _prices = _.map(products, 'price').map(function(bigdecimal) {
+                return bigdecimal.toString();
+            });
+
+            expect(products).to.not.be.null;
+            expect(products).to.have.length(2);
+
+            expect(_prices).to.contain(prices[0].toString());
+            expect(_prices).to.contain(prices[1].toString());
+
+            done(error, products);
+        });
+    });
+
+    it('should be able to use bigdecimal instances in `$nin` query', function(done) {
+
+        var query = Product
+            .where('discounts')
+            .nin([discounts[0], discounts[1]]);
+
+        query.exec(function(error, products) {
+
+            var _prices = _.map(products, 'price').map(function(bigdecimal) {
+                return bigdecimal.toString();
+            });
+
+            expect(products).to.not.be.null;
+            expect(products).to.have.length(3);
+
+            expect(_prices).to.contain(prices[2].toString());
+            expect(_prices).to.contain(prices[3].toString());
+            expect(_prices).to.contain(prices[4].toString());
+
+            done(error, products);
+        });
+    });
+
+    it('should be able to use bigdecimal instances in `$all` query', function(done) {
+
+        var query = Product
+            .where('discounts')
+            .all([discounts[0], discounts[1]]);
+
+        query.exec(function(error, products) {
+
+            var _prices = _.map(products, 'price').map(function(bigdecimal) {
+                return bigdecimal.toString();
+            });
+
+            expect(products).to.not.be.null;
+            expect(products).to.have.length(1);
+
+            expect(_prices).to.contain(prices[0].toString());
+
+            done(error, products);
+        });
+    });
+
+    it('should be able to use bigdecimal instances in `$mod` query', function(done) {
+
+        var query = Product
+            .where({
+                price: {
+                    $mod: [2, 1]
+                }
+            });
+
+        query.exec(function(error, products) {
+
+            var _prices = _.map(products, 'price').map(function(bigdecimal) {
+                return bigdecimal.toString();
+            });
+
+            expect(products).to.not.be.null;
+            expect(products).to.have.length(3);
+
+            expect(_prices).to.contain(prices[0].toString());
+            expect(_prices).to.contain(prices[2].toString());
+            expect(_prices).to.contain(prices[4].toString());
 
             done(error, products);
         });
