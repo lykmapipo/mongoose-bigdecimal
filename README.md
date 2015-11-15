@@ -5,6 +5,8 @@ mongoose-bigdecimal
 
 BigDecimal schema type for [mongoose](https://github.com/Automattic/mongoose) based on [big.js](https://github.com/MikeMcl/big.js/).
 
+*Note!: `[valueOf()](http://mikemcl.github.io/big.js/#valueOf)` implementation of big.js has been ovveriden to return `Number` than `String`*
+
 ## Installation
 ```sh
 $ npm install --save mongoose-bigdecimal
@@ -16,15 +18,27 @@ $ npm install --save mongoose-bigdecimal
 var mongoose = require('mongoose');
 require('mongoose-bigdecimal');
 var Schema = mongoose.Schema;
+var BigDecimal = require('big.js');
 
+//define your schema
 var ProductSchema = new Schema({
     price: {
         type: Schema.Types.BigDecimal,
         required: true,
         index:true
-    }
+    },
+    discounts:[{
+        type: Schema.Types.BigDecimal
+    }]
 });
 Product = mongoose.model('Product', ProductSchema);
+
+//use it
+var book = new Product();
+book.price = new BigDecimal(12);
+
+...
+
 ```
 
 ## Testing
