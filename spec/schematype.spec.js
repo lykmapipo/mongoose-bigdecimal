@@ -91,28 +91,28 @@ describe('BigDecimal Schema Type', function() {
 
     describe('setting the field and not saving', function() {
 
-        it('should store as a Big.js hash', function() {
+        it('should be stored as a bigdecimal', function() {
             var product = new Product({
                 price: new BigDecimal('1221.332')
             });
             expect(product.price.toString()).to.equal(new BigDecimal('1221.332').toString());
         });
 
-        it('should try to cast strings to a big hash', function() {
+        it('should try to cast strings to bigdecimal', function() {
             var product = new Product({
                 price: '1221.332'
             });
             expect(product.price.toString()).to.equal(new BigDecimal('1221.332').toString());
         });
 
-        it('should try to cast integers to a big hash', function() {
+        it('should try to cast integers to bigdecimal', function() {
             var product = new Product({
                 price: 1221
             });
             expect(product.price.toString()).to.equal(new BigDecimal('1221').toString());
         });
 
-        it('should try to cast decimals to a big hash', function() {
+        it('should try to cast decimals to bigdecimal', function() {
             var product = new Product({
                 price: 1221.322
             });
