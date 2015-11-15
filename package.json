@@ -12,13 +12,13 @@
     },
     "keywords": [
         "mongoose",
-        "mongoose-plugin"
+        "mongoose-plugin",
         "type",
         "schematype",
         "bigdecimal",
         "arbitrary",
         "precision",
-        "arithmetic"
+        "arithmetic",
         "decimal"
     ],
     "author": {
