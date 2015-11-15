@@ -5,7 +5,7 @@ mongoose-bigdecimal
 
 BigDecimal schema type for [mongoose](https://github.com/Automattic/mongoose) based on [big.js](https://github.com/MikeMcl/big.js/).
 
-*Note!: `[valueOf()](http://mikemcl.github.io/big.js/#valueOf)` implementation of big.js has been ovveriden to return `Number` than `String`*
+*Note!: [`valueOf()`](http://mikemcl.github.io/big.js/#valueOf) implementation of big.js has been ovveriden to return `Number` than `String`*
 
 ## Installation
 ```sh
