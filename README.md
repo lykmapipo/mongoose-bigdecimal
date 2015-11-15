@@ -36,7 +36,7 @@ Product = mongoose.model('Product', ProductSchema);
 //use it
 var book = new Product();
 book.price = new BigDecimal(12);
-
+book.save(done);
 ...
 
 ```
