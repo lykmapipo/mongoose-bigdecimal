@@ -337,11 +337,33 @@ describe('BigDecimal Schema Type Queries', function() {
         });
     });
 
-    it('should be able to use bigdecimal instances in `$in` query', function(done) {
+    it('should be able to use bigdecimal instances in `$in` query to match values', function(done) {
 
         var query = Product
             .where('discounts')
             .in([discounts[0], discounts[1]]);
+
+        query.exec(function(error, products) {
+
+            var _prices = _.map(products, 'price').map(function(bigdecimal) {
+                return bigdecimal.toString();
+            });
+
+            expect(products).to.not.be.null;
+            expect(products).to.have.length(2);
+
+            expect(_prices).to.contain(prices[0].toString());
+            expect(_prices).to.contain(prices[1].toString());
+
+            done(error, products);
+        });
+    });
+
+    it('should be able to use bigdecimal instances in `$in` query to match values in an Array', function(done) {
+
+        var query = Product
+            .where('price')
+            .in([prices[0], prices[1]]);
 
         query.exec(function(error, products) {
 
