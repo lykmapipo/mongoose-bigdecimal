@@ -1,0 +1,49 @@
+{
+    "name": "mongoose-bigdecimal",
+    "version": "0.1.0",
+    "description": "BigDecimal schema type for mongoose based on big.js",
+    "main": "index.js",
+    "scripts": {
+        "test": "grunt test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lykmapipo/mongoose-bigdecimal.git"
+    },
+    "keywords": [
+        "mongoose",
+        "mongoose-plugin"
+        "type",
+        "schematype",
+        "bigdecimal",
+        "arbitrary",
+        "precision",
+        "arithmetic"
+        "decimal"
+    ],
+    "author": {
+        "name": "lykmapipo",
+        "email": "lallyelias87@gmail.com",
+        "url": "https://github.com/lykmapipo"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lykmapipo/mongoose-bigdecimal/issues"
+    },
+    "homepage": "https://github.com/lykmapipo/mongoose-bigdecimal",
+    "devDependencies": {
+        "async": "^1.5.0",
+        "chai": "^3.4.1",
+        "grunt": "^0.4.5",
+        "grunt-contrib-jshint": "^0.11.3",
+        "grunt-contrib-watch": "^0.6.1",
+        "grunt-mocha-test": "^0.12.7",
+        "jshint-stylish": "^2.0.1",
+        "lodash": "^3.10.1",
+        "mocha": "^2.3.3",
+        "mongoose": "^4.2.5"
+    },
+    "dependencies": {
+        "big.js": "^2.4.1"
+    }
+}
